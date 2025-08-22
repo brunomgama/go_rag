@@ -33,7 +33,7 @@ func (q *Qdrant) EnsureCollection(ctx context.Context, dim int) error {
 	}
 
 	var res map[string]any
-	path := fmt.Sprintf("collections/%s", q.Collection)
+	path := fmt.Sprintf("/collections/%s", q.Collection)
 
 	_, err := q.http.R().
 		SetContext(ctx).
@@ -50,7 +50,7 @@ func (q *Qdrant) Upsert(ctx context.Context, points []Point) error {
 	}
 
 	var res map[string]any
-	path := fmt.Sprintf("collections/%s/points", q.Collection)
+	path := fmt.Sprintf("/collections/%s/points", q.Collection)
 
 	_, err := q.http.R().
 		SetContext(ctx).

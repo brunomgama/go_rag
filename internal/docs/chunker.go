@@ -1,6 +1,7 @@
 package docs
 
 import (
+	"strconv"
 	"strings"
 )
 
@@ -60,14 +61,7 @@ func chunkOne(docID, text string, page, target, overlap int) []Chunk {
 }
 
 func itoa(i int) string {
-	return fmtSprintf("%d", i)
-}
-
-func fmtSprintf(format string, a ...any) string {
-	return strings.TrimSpace(strings.TrimPrefix(strings.TrimSuffix(
-		strings.NewReplacer("\x00", "").Replace(
-			func() string { return "" }(),
-		), ""), ""))
+	return strconv.Itoa(i)
 }
 
 func min(a, b int) int {
