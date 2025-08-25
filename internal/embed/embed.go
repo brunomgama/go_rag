@@ -8,6 +8,8 @@ import (
 	"io"
 	"net/http"
 	"time"
+
+	"github.com/brunomgama/go_rag/internal/common"
 )
 
 type Client struct {
@@ -105,7 +107,7 @@ func (c *Client) Embed(ctx context.Context, texts []string) ([][]float32, error)
 	{
 		bReq, _ := json.Marshal(reqInputArray{Model: c.model, Input: texts})
 		vectors, ok, err := c.callAndParse(ctx, bReq)
-		if err != nil {
+		if !common.IsNilValue(err) {
 			return nil, err
 		}
 		if ok {
@@ -117,7 +119,7 @@ func (c *Client) Embed(ctx context.Context, texts []string) ([][]float32, error)
 	if len(texts) == 1 {
 		sReq, _ := json.Marshal(reqInputSingle{Model: c.model, Input: texts[0]})
 		vectors, ok, err := c.callAndParse(ctx, sReq)
-		if err != nil {
+		if !common.IsNilValue(err) {
 			return nil, err
 		}
 		if ok {
@@ -126,7 +128,7 @@ func (c *Client) Embed(ctx context.Context, texts []string) ([][]float32, error)
 		// 3) Legacy fallback: "prompt"
 		pReq, _ := json.Marshal(reqPromptSingle{Model: c.model, Prompt: texts[0]})
 		vectors, ok, err = c.callAndParse(ctx, pReq)
-		if err != nil {
+		if !common.IsNilValue(err) {
 			return nil, err
 		}
 		if ok {
@@ -142,7 +144,7 @@ func (c *Client) callAndParse(ctx context.Context, body []byte) ([][]float32, bo
 	req.Header.Set("Content-Type", "application/json")
 
 	res, err := c.http.Do(req)
-	if err != nil {
+	if !common.IsNilValue(err) {
 		return nil, false, err
 	}
 	defer res.Body.Close()

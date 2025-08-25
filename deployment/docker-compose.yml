@@ -28,6 +28,7 @@ services:
       - OLLAMA_KEEP_ALIVE=24h
     volumes:
       - ollama:/root/.ollama
+    mem_limit: "12g"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:11434/api/version"]
       interval: 30s

@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/brunomgama/go_rag/internal/common"
 	pdf "github.com/ledongthuc/pdf"
 )
 
@@ -27,7 +28,7 @@ func ParseFile(path string) (Document, error) {
 	default:
 		b, err := os.ReadFile(path)
 
-		if err != nil {
+		if !common.IsNilValue(err) {
 			log.Println("Error reading plain text document..")
 			return Document{}, err
 		}
@@ -45,7 +46,7 @@ func ParseFile(path string) (Document, error) {
 func ParsePDF(path string) (Document, error) {
 	file, reader, err := pdf.Open(path)
 
-	if err != nil {
+	if !common.IsNilValue(err) {
 		log.Println("Error reading document based text document..")
 		return Document{}, err
 	}

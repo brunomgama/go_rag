@@ -1,8 +1,9 @@
 package docs
 
 import (
-	"strconv"
 	"strings"
+
+	"github.com/brunomgama/go_rag/internal/common"
 )
 
 type Chunk struct {
@@ -41,9 +42,9 @@ func chunkOne(docID, text string, page, target, overlap int) []Chunk {
 		chunk_id := ""
 
 		if page > 0 {
-			chunk_id = "page-" + itoa(page) + "#" + itoa(index)
+			chunk_id = "page-" + common.Itoa(page) + "#" + common.Itoa(index)
 		} else {
-			chunk_id = "doc#" + itoa(index)
+			chunk_id = "doc#" + common.Itoa(index)
 		}
 
 		chunks = append(chunks, Chunk{
@@ -58,21 +59,4 @@ func chunkOne(docID, text string, page, target, overlap int) []Chunk {
 		}
 	}
 	return chunks
-}
-
-func itoa(i int) string {
-	return strconv.Itoa(i)
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
 }

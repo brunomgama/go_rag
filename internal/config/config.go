@@ -4,6 +4,7 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/brunomgama/go_rag/internal/common"
 	"github.com/joho/godotenv"
 )
 
@@ -14,6 +15,8 @@ type Config struct {
 	QdrantCollection string
 	ChunkTarget      int
 	ChunkOverlap     int
+	llm_Model        string
+	llm_Port         int
 }
 
 func Load() Config {
@@ -25,6 +28,8 @@ func Load() Config {
 		QdrantCollection: envDefault("QDRANT_COLLECTION", "docs"),
 		ChunkTarget:      mustInt(os.Getenv("CHUNK_TOKEN_TARGET"), 800),
 		ChunkOverlap:     mustInt(os.Getenv("CHUNK_OVERLAP"), 120),
+		llm_Model:        envDefault("LLM_MODEL", "llama3.1:8b"),
+		llm_Port:         mustInt(os.Getenv("LLM_PORT"), 8080),
 	}
 }
 
@@ -40,7 +45,7 @@ func mustInt(s string, def int) int {
 		return def
 	}
 	v, err := strconv.Atoi(s)
-	if err != nil {
+	if !common.IsNilValue(err) {
 		return def
 	}
 	return v

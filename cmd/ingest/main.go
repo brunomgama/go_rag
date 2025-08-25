@@ -152,26 +152,23 @@ func main() {
 	vectorsPerSec := float64(m.vectors) / elapsed.Seconds()
 
 	fmt.Printf(`
-		✅ Ingest complete
+	✅ Ingest complete
 		Docs:    %d
 		Chunks:  %d
 		Vectors: %d
 		~Tokens: %d
 
-		Timing:
+	⏰ Timing:
 		Total:        %s
 		Parse+Chunk:  %s
 		Embed:        %s
 		Upsert:       %s
 
-		Throughput:
+	🔄 Throughput:
 		Chunks/sec:   %.2f
 		Vectors/sec:  %.2f
-		`[1:],
-		m.docs, m.chunks, m.vectors, m.approxTokens,
-		elapsed, m.parseChunkMs, m.embedMs, m.upsertMs,
-		chunksPerSec, vectorsPerSec,
-	)
+`[1:],m.docs, m.chunks, m.vectors, m.approxTokens,elapsed, m.parseChunkMs, m.embedMs, m.upsertMs,chunksPerSec, vectorsPerSec,)
+
 }
 
 func fileSHA256(path string) (string, error) {
